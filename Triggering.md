@@ -1,5 +1,7 @@
 **ITEM**(_id_, title, stock)
+
 **USER**(_id_, name)
+
 **ORDER_ITEM**(_id_, quantity, item_id, user_id)
 
 > Create a trigger to decremene the quantity of item from Item relation when the same item is inserted on OrderItem.
