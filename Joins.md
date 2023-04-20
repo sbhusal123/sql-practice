@@ -62,3 +62,27 @@ order by count(*) desc) as temp_table
 on c.customer_id = temp_table.customer_id;
 ```
 
+## 3. Find the customers who have no orders but a shipping
+
+```sql
+select c.* from Customers c left join
+(
+  select c.customer_id as customer_id
+  from
+  Customers c inner join Orders o
+  on c.customer_id = o.customer_id
+) customerOrder
+on
+c.customer_id = customerOrder.customer_id
+except
+select c.* from Customers c inner join
+(
+  select c.customer_id as customer_id
+  from
+  Customers c inner join Shippings s
+  on c.customer_id = s.customer
+) customerShipping
+on
+c.customer_id = customerShipping.customer_id;
+```
+
