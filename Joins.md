@@ -40,4 +40,25 @@ except
 select customer_id from Orders);
 ```
 
+## 2. Select the first_name, last_name, and order count of the customer in descending order who has ordered more than 2 times.
+
+**With Direct Joins Of Table**
+```sql
+select c.first_name as first_name, c.last_name,  count(*) as order_count
+from Customers c, Orders o
+on c.customer_id = o.customer_id
+group by c.customer_id having count(*) > 2 order by count(*) desc;
+```
+
+**With Subquery Join**
+```sql
+select c.first_name, c.last_name, temp_table.order_count from 
+Customers c inner join
+(select customer_id, count(*) as order_count 
+from Orders 
+group by customer_id 
+having count(*) > 2 
+order by count(*) desc) as temp_table
+on c.customer_id = temp_table.customer_id;
+```
 
